@@ -1,0 +1,67 @@
+# pNMS Toolkit for MRgLITT Outcome Analysis
+
+This repository provides a MATLAB-based implementation of the **Personalized NeuroMetabolic Signature (pNMS)** framework proposed in our study:
+> *Personalized NeuroMetabolic Signature (pNMS) Predicts Seizure Outcomes in Mesial Temporal Lobe Epilepsy after Magnetic Resonance-guided Laser Interstitial Thermal Therapy*  
+> Mo et al., submitted to *Communications Medicine*
+
+## Overview
+
+The pipeline enables voxel-wise image preprocessing, quantitative asymmetry index (AI) calculation from multimodal neuroimages (T1WI, FLAIR, FDG-PET), and personalized PET abnormality mapping. The pNMS is then intersected with surgical cavities to assess ablation coverage and relate to clinical seizure outcomes.
+
+## Dependencies
+
+- MATLAB (tested on R2021a)
+- SPM12 toolbox (https://www.fil.ion.ucl.ac.uk/spm/software/spm12/)
+- NIfTI-format neuroimaging data
+
+## Folder Structure and Input
+
+Project Root/ \
+├── litt001/ \
+│ ├── anat.nii \
+│ ├── flair.nii \
+│ ├── pet.nii \
+│ └── surg_roi.nii \
+├── litt002/ \
+│ └── ... \
+└── scripts/
+
+
+Each subject folder (e.g., `litt001`) should contain:
+- `anat.nii` – 3D T1-weighted structural MRI
+- `flair.nii` – T2-FLAIR image
+- `pet.nii` – FDG-PET image
+- `surg_roi.nii` – postoperative surgical cavity mask
+
+## Script Modules
+
+The analysis is modular. Scripts should be run sequentially for each subject or batch-processed:
+
+| Script | Description |
+|--------|-------------|
+| `script1_data_processed.m` | Segments anatomical images and performs spatial normalization of all modalities. |
+| `script2_calculate_AI.m` | Computes AI maps for each modality by flipping and contrasting hemispheres. |
+| `script3_multimodal_extract.m` | Extracts AI values within surgical cavity masks. |
+| `script4_surgical_cavity.m` | Calculates total ablation volume per subject. |
+| `script5_threshold_AI.m` | Thresholds PET-AI maps based on predefined cutoffs (e.g., -0.06). |
+| `script6_pet_pattern_deform.m` | Transforms thresholded pNMS back to native surgical space. |
+| `script7_overlay_AH.m` | Computes overlap rates between pNMS, hippocampus/amygdala, and ablation mask. |
+| `scriptS1_coregistration.m` | Coregisters flair, PET, and post-op MRI to the T1 anatomical image. |
+
+## Output
+
+Main output files include:
+- `AI_imwrpet.nii` – asymmetry index of PET image
+- `threshold_AI_imwrpet.nii` – binarized pNMS abnormality map
+- `bi_iy_threshold_AI_imwrpet.nii` – pNMS map warped to surgical space
+- `overlay_rate_number.mat` – array of overlap rates per subject
+
+These outputs can be used for downstream statistical analysis (e.g., R or Python) to relate image-derived metrics to seizure outcome.
+
+## Citation
+
+If you use this code, please cite the following:
+
+> Mo et al. *Personalized NeuroMetabolic Signature (pNMS) Predicts Seizure Outcomes in Mesial Temporal Lobe Epilepsy after MR-guided Laser Interstitial Thermal Therapy*, *Communications Medicine* (in review)
+
+
