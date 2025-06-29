@@ -1,5 +1,5 @@
 variableLabels = {'ipsi_hippo','AI_hippo','ipsi_amyg','AI_amyg','ipsi_hippo_amyg','ipsi_AI_hippo_amyg','TIV'};
-x = data(:,1);
+x = data(:,5：11);
 y = data(:,3);
 
 %% 初始化参数
