@@ -39,14 +39,17 @@ The analysis is modular. Scripts should be run sequentially for each subject or 
 
 | Script | Description |
 |--------|-------------|
-| `script1_data_processed.m` | Segments anatomical images and performs spatial normalization of all modalities. |
-| `script2_calculate_AI.m` | Computes AI maps for each modality by flipping and contrasting hemispheres. |
-| `script3_multimodal_extract.m` | Extracts AI values within surgical cavity masks. |
-| `script4_surgical_cavity.m` | Calculates total ablation volume per subject. |
-| `script5_threshold_AI.m` | Thresholds PET-AI maps based on predefined cutoffs (e.g., -0.06). |
-| `script6_pet_pattern_deform.m` | Transforms thresholded pNMS back to native surgical space. |
-| `script7_overlay_AH.m` | Computes overlap rates between pNMS, hippocampus/amygdala, and ablation mask. |
+| `script1_win_data_processed.m` | Segments anatomical images and performs spatial normalization of all modalities. |
+| `script2_win_AIcalculate.m` | Computes AI maps for each modality by flipping and contrasting hemispheres. |
+| `script3_signal_calculation.m` | Caluculates the signals from multimodalities. |
+| `script4_surgical_cavity_calculation.m` | Calculates total ablation volume per subject. |
+| `script5_threshold_binary_AI_imagesI.m` | Thresholds PET-AI maps based on predefined cutoffs (e.g., -0.06). |
+| `script6_pet_pattern_deformation.m` | Transforms thresholded pNMS back to native surgical space. |
+| `script7_surgery_AH_pattern_overlay.m` | Computes overlap rates between pNMS, hippocampus/amygdala, and ablation mask. |
+| `script8_visalization.m` | Visalizes the pNMS. |
+| `script9_regression_model.m` | Performs the GAM analysis. |
 | `scriptS1_coregistration.m` | Coregisters flair, PET, and post-op MRI to the T1 anatomical image. |
+| `scriptS2_within_group_comparison.m` | Compares the differences between two indenpent groups of numbes. |
 
 ## Output
 
