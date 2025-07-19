@@ -56,14 +56,13 @@ for foldnumber = 1:pathnumber
     spm_jobman('run',matlabbatch);  
     clear matlabbatch;
     
-    nii_file = 'iy_threshold_AI_imwrpet.nii';  % 确保将此路径替换为实际NIfTI文件的路径
+    nii_file = 'iy_threshold_AI_imwrpet.nii';  
     V = spm_vol(nii_file);
     img = spm_read_vols(V);
 
     img(img > 0.1) = 1;    img(img <= 0.1) = 0;
 
-    % 保存修改后的影像文件
-    V.fname = 'bi_iy_threshold_AI_imwrpet.nii';  % 确保将此路径替换为保存修改后文件的路径
+    V.fname = 'bi_iy_threshold_AI_imwrpet.nii';  
     spm_write_vol(V, img);
     
 end
