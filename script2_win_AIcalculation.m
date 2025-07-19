@@ -1,3 +1,7 @@
+% This script computes voxel-wise asymmetry index (AI) maps 
+% for each subject by flipping anatomical, FLAIR, and PET images,
+% and calculating asymmetry as: 2*(original - flipped) / (original + flipped)
+
 clear;clc;
 pathfileformation = dir('litt*');
 pathnumber = numel(pathfileformation);
