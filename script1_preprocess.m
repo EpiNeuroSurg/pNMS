@@ -1,3 +1,5 @@
+% Replace with the actual path to TPM.nii in your SPM12 folder
+
 clear;clc;
 pathfileformation = dir('te*');
 pathnumber = numel(pathfileformation);
