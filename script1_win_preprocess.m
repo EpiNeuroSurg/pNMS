@@ -1,3 +1,8 @@
+% Batch script for SPM12-based segmentation and normalization
+% Note: Replace all file paths (e.g., TPM.nii) with paths specific to your system.
+
+% Loop through folders matching the pattern 'litt*'
+
 clear;clc;
 pathfileformation = dir('litt*');
 pathnumber = numel(pathfileformation);
