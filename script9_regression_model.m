@@ -2,13 +2,13 @@ variableLabels = {'ipsi_hippo','AI_hippo','ipsi_amyg','AI_amyg','ipsi_hippo_amyg
 x = data(:,5：11);
 y = data(:,3);
 
-%% 初始化参数
+%% Initialize parameters
 numIterations = 10;
 numFolds = 5;
 numSamples = size(x, 1);
 numFeatures = size(x, 2);
 
-% 初始化结果存储
+% Initialize arrays for storing results
 allPreds = zeros(numSamples, numIterations);
 allPredCI_Lower = zeros(numSamples, numIterations);
 allPredCI_Upper = zeros(numSamples, numIterations);
@@ -19,19 +19,19 @@ for iter = 1:numIterations
     yPredCV = zeros(numSamples, 1);
     yPredCI = zeros(numSamples, 2);
 
-    % 内层循环：K折交叉验证
+    % Inner loop: K-fold cross-validation
     for k = 1:numFolds
-        trainIdx = training(cv, k); % 获取训练集索引
-        testIdx = test(cv, k); % 获取测试集索引
+        trainIdx = training(cv, k); % Get training set indices
+        testIdx = test(cv, k); % Get test set indices
 
-        % 训练GAM模型
+        % Train GAM model
         gamModel = fitrgam(x(trainIdx, :), y(trainIdx));
         
-        % 进行预测
+        % Make predictions
         yPred = predict(gamModel, x(testIdx, :));
         yPredCV(testIdx) = yPred;
         
-        % 计算预测区间
+        % Compute prediction interval
         residuals = y(testIdx) - yPred;
         stdResiduals = std(residuals);
         yPredCI(testIdx, :) = [yPred - 1.96 * stdResiduals, yPred + 1.96 * stdResiduals];
@@ -59,14 +59,14 @@ for iter = 1:numIterations
         
     end
 
-    % 存储每次迭代的结果
+    % Store results from each iteration
     allPreds(:, iter) = yPredCV;
     allPredCI_Lower(:, iter) = yPredCI(:, 1);
     allPredCI_Upper(:, iter) = yPredCI(:, 2);
-    allShapleyValues(:, iter) = a(:, 1);  % 平均每个特征的Shapley值
+    allShapleyValues(:, iter) = a(:, 1);  % Average Shapley values for each feature
 end
 
-% 计算均值
+% Compute mean values across iterations
 meanPreds = mean(allPreds, 2);
 meanPredCI_Lower = mean(allPredCI_Lower, 2);
 meanPredCI_Upper = mean(allPredCI_Upper, 2);
@@ -78,7 +78,7 @@ ax.YDir = 'reverse';
 
 figure;plot(explainer)
 
-% 绘制实际值和预测值以及 95% 预测区间限制
+% Plot actual vs. predicted values with 95% prediction intervals
 [~, sortIndex] = sort(y);
 figure;
 hold on;
@@ -92,7 +92,7 @@ legend('Location', 'best');
 hold off;
 
 
-% 计算 Pearson 相关系数作为 p 值
+% Compute Pearson correlation coefficient and p-value
 [r, pValue] = corr(yPredCV, y);
 disp(['Pearson Correlation Coefficient: ', num2str(r)]);
 disp(['p-value: ', num2str(pValue)]);
