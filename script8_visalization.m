@@ -1,4 +1,11 @@
-% Please replace with the actual paths to ramyg.nii and rhippo.nii
+% This script performs subject-wise processing to:
+% 1. Copy subject-specific right hippocampus (rhippo.nii) and right amygdala (ramyg.nii) masks
+%    from a source directory into each subject's working folder.
+% 2. Generate a masked anatomical image using segmented tissue probability maps.
+% 3. Multiply amygdala + hippocampus masks with binarized inverse AI PET mask.
+
+% NOTE: Please replace the base path in `copyfile` with the actual location of Freesurfer segmentations.
+
 
 pathfileformation = dir('litt*');
 pathnumber = numel(pathfileformation);
@@ -13,7 +20,7 @@ for foldnumber = 1:pathnumber
         [path,'\ramyg.nii']);
     
     spm_jobman('initcfg'); 
-    
+    % Multiply the sum of gray matter (c1), white matter (c2), and CSF (c3) with the original anat image
     matlabbatch{1}.spm.util.imcalc.input = {
                                         'c1anat.nii,1'
                                         'c2anat.nii,1'
