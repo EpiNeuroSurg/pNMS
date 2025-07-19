@@ -1,3 +1,5 @@
+% Please replace with the actual paths to ramyg.nii and rhippo.nii
+
 pathfileformation = dir('litt*');
 pathnumber = numel(pathfileformation);
 
