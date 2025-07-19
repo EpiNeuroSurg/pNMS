@@ -1,16 +1,16 @@
 data = temp_temp(:,1);
 groups = temp_temp(:,2);
 
-% 创建一个表格，将数据和分组信息结合在一起
+% Create a table to combine data and group information
 T = table(data, groups);
 
-% 根据分组计算每个组的均值
+% Compute the mean of each group
 groupMeans = varfun(@mean, T, 'InputVariables', 'data', 'GroupingVariables', 'groups');
 
-% 显示每个分组的均值
+% Display the mean of each group
 disp(groupMeans);
 
-% 如果需要绘制每个分组的均值条形图
+% Plot bar chart of group means if needed
 figure;
 bar(groupMeans.mean_data);
 set(gca, 'XTickLabel', groupMeans.groups);
