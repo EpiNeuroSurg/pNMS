@@ -1,10 +1,12 @@
+% This script computes the overlay rate between a structure mask (e.g., rhippo.nii),
+% the surgical cavity (surg_roi.nii), and the binarized PET asymmetry mask (bi_iy_threshold_AI_imwrpet.nii)
 % Please replace with the actual paths to amyg.nii and hippo.nii, as well as ramyg.nii and rhoppo.nii
 
 clear;clc;
 pathfileformation = dir('litt*');
 pathnumber = numel(pathfileformation);
 
-overlay_rate_number = [];
+overlay_rate_number = [];% Initialize array to store overlay rates
 for foldnumber = 1:pathnumber
     path = fullfile(pathfileformation(foldnumber).folder, pathfileformation(foldnumber).name);
     cd(path);
@@ -43,11 +45,13 @@ for foldnumber = 1:pathnumber
     overlap = mni_template_data & surgical_cavity_data & binary_threshold_data;
     num_overlap_voxels = sum(overlap(:));
 
+    % Voxels where structure mask and binary AI mask overlap
     temp = mni_template_data & binary_threshold_data;
     num_combined_voxels = sum(temp(:));
 
     % Calculate the overlay rate
     overlay_rate = num_overlap_voxels / num_combined_voxels;
-    
+
+    % Store the result
     overlay_rate_number(foldnumber,1) = overlay_rate;
 end
