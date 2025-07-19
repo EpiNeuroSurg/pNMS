@@ -5,17 +5,17 @@ for foldnumber = 1:pathnumber
     path = fullfile(pathfileformation(foldnumber).folder, pathfileformation(foldnumber).name);
     cd(path);
     
-    % 读取NIfTI文件
-    nii_file = 'AI_imwrpet.nii';  % 确保将此路径替换为实际NIfTI文件的路径
+    % Read NIfTI file
+    nii_file = 'AI_imwrpet.nii';  % Make sure to replace this path with the actual path to the NIfTI file
     V = spm_vol(nii_file);
     img = spm_read_vols(V);
 
-    % 修改体素值
+    % Modify voxel values
     threshold = -0.0578157525;
     img(img > threshold) = 0;    img(img <= threshold) = 1;
 
-    % 保存修改后的影像文件
-    V.fname = 'threshold_AI_imwrpet.nii';  % 确保将此路径替换为保存修改后文件的路径
+    % Save the modified NIfTI image
+    V.fname = 'threshold_AI_imwrpet.nii';  % Make sure to replace this path with the desired output path
     spm_write_vol(V, img);
 
 end
