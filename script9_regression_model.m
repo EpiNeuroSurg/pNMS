@@ -2,7 +2,7 @@ variableLabels = {'ipsi_hippo','AI_hippo','ipsi_amyg','AI_amyg','ipsi_hippo_amyg
 x = data(:,5：11);
 y = data(:,3);
 
-%% Initialize parameters
+% Initialize parameters
 numIterations = 10;
 numFolds = 5;
 numSamples = size(x, 1);
