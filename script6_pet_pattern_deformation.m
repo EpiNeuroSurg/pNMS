@@ -1,3 +1,7 @@
+% This script performs tissue segmentation and inverse normalization 
+% of thresholded AI PET images to subject space.
+% Then, it applies a binary threshold to create a binarized version of the warped mask.
+
 clear;clc;
 pathfileformation = dir('litt*');
 pathnumber = numel(pathfileformation);
@@ -6,7 +10,8 @@ for foldnumber = 1:pathnumber
     cd(path);
     
     spm_jobman('initcfg'); 
-    
+
+    % Step 1: Segment anatomical image (anat.nii)
     matlabbatch{1}.spm.spatial.preproc.channel.vols = {'anat.nii,1'};
     matlabbatch{1}.spm.spatial.preproc.channel.biasreg = 0.001;
     matlabbatch{1}.spm.spatial.preproc.channel.biasfwhm = 60;
@@ -60,8 +65,10 @@ for foldnumber = 1:pathnumber
     V = spm_vol(nii_file);
     img = spm_read_vols(V);
 
+    % Apply threshold: values > 0.1 are set to 1, else 0
     img(img > 0.1) = 1;    img(img <= 0.1) = 0;
 
+    % Save as binary mask
     V.fname = 'bi_iy_threshold_AI_imwrpet.nii';  
     spm_write_vol(V, img);
     
