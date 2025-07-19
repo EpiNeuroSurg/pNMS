@@ -1,4 +1,9 @@
+% GAM-based prediction with Shapley explanation and uncertainty intervals
+
+% Define variable labels
 variableLabels = {'ipsi_hippo','AI_hippo','ipsi_amyg','AI_amyg','ipsi_hippo_amyg','ipsi_AI_hippo_amyg','TIV'};
+
+% Extract predictors (x) and target variable (y)
 x = data(:,5：11);
 y = data(:,3);
 
