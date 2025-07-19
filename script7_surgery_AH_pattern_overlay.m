@@ -1,3 +1,5 @@
+% Please replace with the actual paths to amyg.nii and hippo.nii, as well as ramyg.nii and rhoppo.nii
+
 clear;clc;
 pathfileformation = dir('litt*');
 pathnumber = numel(pathfileformation);
